@@ -104,6 +104,23 @@
             border-color: #e62b1e;
         }
 
+        .password-toggle {
+            padding: 0;
+            border: none;
+            background: none;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-left: -36px;
+            margin-right: 8px;
+            z-index: 1;
+            transition: color 0.2s;
+        }
+
+        .password-toggle:hover {
+            color: rgba(255,255,255,0.7);
+        }
+
         .password-form button {
             padding: 10px 20px;
             border: none;
@@ -240,6 +257,7 @@
     <p>Enter the password to access the AI assistant testing environment.</p>
     <div class="password-form">
         <input type="password" id="password-input" placeholder="Password" autofocus>
+        <button type="button" class="password-toggle" id="password-toggle" onclick="togglePassword()">Show</button>
         <button onclick="checkPassword()">Enter</button>
     </div>
     <p class="password-error" id="password-error">Incorrect password. Please try again.</p>
@@ -287,6 +305,18 @@
 <!-- Password check -->
 <script>
 var ACCESS_PASSWORD = 'lastfrontier_testing_2026';
+
+function togglePassword() {
+    var input = document.getElementById('password-input');
+    var toggle = document.getElementById('password-toggle');
+    if (input.type === 'password') {
+        input.type = 'text';
+        toggle.textContent = 'Hide';
+    } else {
+        input.type = 'password';
+        toggle.textContent = 'Show';
+    }
+}
 
 function checkPassword() {
     var input = document.getElementById('password-input').value;
