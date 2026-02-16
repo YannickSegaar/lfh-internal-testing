@@ -82,38 +82,47 @@
             display: flex;
             gap: 8px;
             justify-content: center;
+            align-items: center;
         }
 
-        .password-form input {
-            padding: 10px 16px;
+        .password-wrapper {
+            position: relative;
+            width: 240px;
+        }
+
+        .password-wrapper input {
+            padding: 10px 40px 10px 16px;
             border: 1px solid rgba(255,255,255,0.25);
             border-radius: 6px;
             background: rgba(255,255,255,0.1);
             color: #fff;
             font-size: 0.9rem;
             outline: none;
-            width: 200px;
+            width: 100%;
             backdrop-filter: blur(4px);
         }
 
-        .password-form input::placeholder {
+        .password-wrapper input::placeholder {
             color: rgba(255,255,255,0.4);
         }
 
-        .password-form input:focus {
+        .password-wrapper input:focus {
             border-color: #e62b1e;
         }
 
         .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
             padding: 0;
             border: none;
             background: none;
-            color: rgba(255,255,255,0.4);
-            font-size: 0.75rem;
+            color: rgba(255,255,255,0.35);
             cursor: pointer;
-            margin-left: -36px;
-            margin-right: 8px;
-            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: color 0.2s;
         }
 
@@ -121,7 +130,12 @@
             color: rgba(255,255,255,0.7);
         }
 
-        .password-form button {
+        .password-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .password-form > button {
             padding: 10px 20px;
             border: none;
             border-radius: 6px;
@@ -256,8 +270,13 @@
     <h2>Internal Testing Access</h2>
     <p>Enter the password to access the AI assistant testing environment.</p>
     <div class="password-form">
-        <input type="password" id="password-input" placeholder="Password" autofocus>
-        <button type="button" class="password-toggle" id="password-toggle" onclick="togglePassword()">Show</button>
+        <div class="password-wrapper">
+            <input type="password" id="password-input" placeholder="Password" autofocus>
+            <button type="button" class="password-toggle" id="password-toggle" onclick="togglePassword()" aria-label="Show password">
+                <svg id="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg id="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+        </div>
         <button onclick="checkPassword()">Enter</button>
     </div>
     <p class="password-error" id="password-error">Incorrect password. Please try again.</p>
@@ -308,13 +327,16 @@ var ACCESS_PASSWORD = 'lastfrontier_testing_2026';
 
 function togglePassword() {
     var input = document.getElementById('password-input');
-    var toggle = document.getElementById('password-toggle');
+    var eyeOpen = document.getElementById('eye-open');
+    var eyeClosed = document.getElementById('eye-closed');
     if (input.type === 'password') {
         input.type = 'text';
-        toggle.textContent = 'Hide';
+        eyeOpen.style.display = 'none';
+        eyeClosed.style.display = 'block';
     } else {
         input.type = 'password';
-        toggle.textContent = 'Show';
+        eyeOpen.style.display = 'block';
+        eyeClosed.style.display = 'none';
     }
 }
 
