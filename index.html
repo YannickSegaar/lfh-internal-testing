@@ -51,10 +51,92 @@
             z-index: 9999;
         }
 
+        /* Password gate */
+        .password-gate {
+            text-align: center;
+            max-width: 400px;
+            padding: 40px 24px;
+        }
+
+        .password-gate .logo {
+            width: 280px;
+            max-width: 90vw;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+        }
+
+        .password-gate h2 {
+            font-family: 'Nexa Rust Sans Black 2', system-ui, sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .password-gate p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .password-form {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .password-form input {
+            padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            width: 200px;
+            backdrop-filter: blur(4px);
+        }
+
+        .password-form input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .password-form input:focus {
+            border-color: #e62b1e;
+        }
+
+        .password-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background: #e62b1e;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .password-form button:hover {
+            background: #cc2419;
+        }
+
+        .password-error {
+            color: #ff6b6b;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Main content (hidden until authenticated) */
         .content {
             text-align: center;
-            max-width: 600px;
+            max-width: 640px;
             padding: 40px 24px;
+            display: none;
+        }
+
+        .content.visible {
+            display: block;
         }
 
         .logo {
@@ -75,7 +157,25 @@
             color: rgba(255,255,255,0.75);
             font-size: 0.95rem;
             line-height: 1.6;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+        }
+
+        .disclaimer {
+            background: rgba(230, 43, 30, 0.15);
+            border: 1px solid rgba(230, 43, 30, 0.4);
+            border-radius: 8px;
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+        }
+
+        .disclaimer strong {
+            color: #e62b1e;
+            display: block;
+            margin-bottom: 6px;
         }
 
         .instructions {
@@ -88,6 +188,7 @@
             line-height: 1.7;
             color: rgba(255,255,255,0.85);
             backdrop-filter: blur(4px);
+            margin-bottom: 20px;
         }
 
         .instructions strong {
@@ -99,7 +200,25 @@
         }
 
         .instructions li {
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+        }
+
+        .feedback-note {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(78, 204, 163, 0.3);
+            border-radius: 8px;
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.85);
+            backdrop-filter: blur(4px);
+        }
+
+        .feedback-note strong {
+            color: #4ecca3;
+            display: block;
+            margin-bottom: 6px;
         }
 
         .version {
@@ -113,36 +232,93 @@
 
 <div class="test-banner">INTERNAL TESTING ONLY — Not for public distribution</div>
 
-<div class="content">
+<!-- Password Gate -->
+<div class="password-gate" id="password-gate">
+    <img src="https://yannicksegaar.github.io/RomAIx-Logo/LFH_Logo_FullName_White.svg"
+         alt="Last Frontier Heliskiing" class="logo">
+    <h2>Internal Testing Access</h2>
+    <p>Enter the password to access the AI assistant testing environment.</p>
+    <div class="password-form">
+        <input type="password" id="password-input" placeholder="Password" autofocus>
+        <button onclick="checkPassword()">Enter</button>
+    </div>
+    <p class="password-error" id="password-error">Incorrect password. Please try again.</p>
+</div>
+
+<!-- Main Content (hidden until authenticated) -->
+<div class="content" id="main-content">
     <img src="https://yannicksegaar.github.io/RomAIx-Logo/LFH_Logo_FullName_White.svg"
          alt="Last Frontier Heliskiing" class="logo">
 
-    <h1>AI Assistant — Internal Testing</h1>
+    <h1>AI Assistant — Knowledge Base Testing</h1>
 
     <p class="subtitle">
-        Click the chat bubble in the bottom-right corner to start testing the AI assistant.
+        Click the chat bubble in the bottom-right corner to start a conversation with the AI assistant.
     </p>
 
+    <div class="disclaimer">
+        <strong>What you're testing:</strong>
+        This is the AI assistant's knowledge base — the information it has learned about Last Frontier Heliskiing.
+        You're testing whether it returns accurate, helpful answers to your questions.
+        Interactive components (tour carousels, booking forms, lodge comparisons, etc.) are not included in this version and will be added later.
+    </div>
+
     <div class="instructions">
-        <strong>Testing guidelines:</strong>
+        <strong>How to test:</strong>
         <ul>
-            <li>Ask about tours, lodges, pricing, safety, and booking</li>
-            <li>Try different conversation paths and edge cases</li>
-            <li>Test the interactive components (carousels, forms, etc.)</li>
-            <li>Note any incorrect answers or unexpected behavior</li>
-            <li>Share feedback with the team</li>
+            <li>Ask the assistant questions about Last Frontier — tours, lodges, pricing, safety, terrain, getting here, and anything else guests might ask</li>
+            <li>Check if the answers are <strong>accurate</strong> — does it get the facts right?</li>
+            <li>Check if the answers are <strong>complete</strong> — is anything important missing?</li>
+            <li>Check if the <strong>tone</strong> feels right — does it sound like Last Frontier?</li>
+            <li>Try tricky or unusual questions to see how it handles them</li>
         </ul>
+    </div>
+
+    <div class="feedback-note">
+        <strong>Your feedback is essential:</strong>
+        After testing, please share your thoughts — what answers were great, what was wrong or missing, and what didn't feel right.
+        This feedback directly shapes how we improve the assistant.
+        You can use the thumbs up/down buttons in the chat, or send your notes to the team.
     </div>
 
     <p class="version" id="version-info">Loading assistant...</p>
 </div>
 
-<!-- VoiceFlow Chat Widget -->
+<!-- Password check -->
 <script>
-(function(d, t) {
+var ACCESS_PASSWORD = 'lastfrontier2027';
+
+function checkPassword() {
+    var input = document.getElementById('password-input').value;
+    if (input === ACCESS_PASSWORD) {
+        document.getElementById('password-gate').style.display = 'none';
+        document.getElementById('main-content').classList.add('visible');
+        sessionStorage.setItem('lfh_test_auth', 'true');
+        loadVoiceflow();
+    } else {
+        document.getElementById('password-error').style.display = 'block';
+        document.getElementById('password-input').value = '';
+        document.getElementById('password-input').focus();
+    }
+}
+
+// Allow Enter key
+document.getElementById('password-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPassword();
+});
+
+// Check if already authenticated this session
+if (sessionStorage.getItem('lfh_test_auth') === 'true') {
+    document.getElementById('password-gate').style.display = 'none';
+    document.getElementById('main-content').classList.add('visible');
+    loadVoiceflow();
+}
+
+function loadVoiceflow() {
+    var d = document, t = 'script';
     var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-    v.onload = async function() {
-        console.log("VoiceFlow widget script loaded. Importing extensions...");
+    v.onload = function() {
+        console.log("VoiceFlow widget script loaded.");
 
         // Device detection
         var MOBILE_BREAKPOINT = 768;
@@ -188,77 +364,46 @@
             page_topic: ''
         };
 
-        console.log('=== BROWSER CONTEXT ===');
-        console.log('Device:', deviceType, '| Language:', userLanguage);
-        console.log('Timezone:', visitorTimezone, '| Hour:', localHour, '| Day:', dayOfWeek);
-        console.log('Returning:', isReturning, '| Visits:', visitCount);
-        console.log('========================');
+        document.getElementById('version-info').textContent = 'Knowledge base testing — assistant ready';
 
-        try {
-            var { allExtensions } = await import('./extensions.js');
-            var extensions = allExtensions.filter(function(ext) { return ext && ext.name; });
-
-            if (extensions.length === 0) throw new Error("No valid extensions found");
-
-            console.log("Extensions loaded:", extensions.map(function(e) { return e.name; }));
-            document.getElementById('version-info').textContent =
-                extensions.length + ' extensions loaded — assistant ready';
-
-            window.voiceflow.chat.load({
-                verify: { projectID: '697b7ad4c3869d8704245dc7' },
-                url: 'https://general-runtime.voiceflow.com',
-                versionID: 'production',
-                launch: {
-                    event: {
-                        type: 'launch',
-                        payload: sessionData
-                    }
-                },
-                assistant: {
-                    stylesheet: 'https://yannicksegaar.github.io/lastfrontier-voiceflow-styles/LFH_styles.css?=v3',
-                    extensions: extensions
+        window.voiceflow.chat.load({
+            verify: { projectID: '697b7ad4c3869d8704245dc7' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'production',
+            launch: {
+                event: {
+                    type: 'launch',
+                    payload: sessionData
                 }
-            }).then(function() {
-                console.log("VoiceFlow chat loaded successfully");
+            },
+            assistant: {
+                stylesheet: 'https://yannicksegaar.github.io/lastfrontier-voiceflow-styles/LFH_styles.css?=v3'
+            }
+        }).then(function() {
+            console.log("VoiceFlow chat loaded successfully");
 
-                window.voiceflow.chat.proactive.clear();
-                setTimeout(function() {
-                    window.voiceflow.chat.proactive.push({
-                        type: 'text',
-                        payload: { message: 'Curious about heliskiing in Northern BC?' }
-                    });
-                }, 1000);
-                setTimeout(function() {
-                    window.voiceflow.chat.proactive.push({
-                        type: 'text',
-                        payload: { message: 'I can show you around!' }
-                    });
-                }, 3000);
-                setTimeout(function() {
-                    window.voiceflow.chat.open();
-                }, 4000);
-            });
-        } catch (error) {
-            console.error("Error loading extensions:", error);
-            document.getElementById('version-info').textContent = 'Extensions failed — loading basic assistant';
-
-            window.voiceflow.chat.load({
-                verify: { projectID: '697b7ad4c3869d8704245dc7' },
-                url: 'https://general-runtime.voiceflow.com',
-                versionID: 'production',
-                launch: {
-                    event: {
-                        type: 'launch',
-                        payload: sessionData
-                    }
-                }
-            });
-        }
+            window.voiceflow.chat.proactive.clear();
+            setTimeout(function() {
+                window.voiceflow.chat.proactive.push({
+                    type: 'text',
+                    payload: { message: 'Curious about heliskiing in Northern BC?' }
+                });
+            }, 1000);
+            setTimeout(function() {
+                window.voiceflow.chat.proactive.push({
+                    type: 'text',
+                    payload: { message: 'I can show you around!' }
+                });
+            }, 3000);
+            setTimeout(function() {
+                window.voiceflow.chat.open();
+            }, 4000);
+        });
     };
     v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
     v.type = 'text/javascript';
     s.parentNode.insertBefore(v, s);
-})(document, 'script');
+}
 </script>
 
 <!-- Shadow DOM style injection -->
