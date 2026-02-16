@@ -364,6 +364,17 @@ function loadVoiceflow() {
             page_topic: ''
         };
 
+        // Load feedback extension only
+        var feedbackExtension = null;
+        try {
+            var mod = await import('./lfh-feedback-v10.js');
+            feedbackExtension = mod.FeedbackExtension10;
+            console.log('Feedback extension loaded:', feedbackExtension.name);
+        } catch (err) {
+            console.warn('Could not load feedback extension:', err);
+        }
+
+        var extensions = feedbackExtension ? [feedbackExtension] : [];
         document.getElementById('version-info').textContent = 'Knowledge base testing — assistant ready';
 
         window.voiceflow.chat.load({
@@ -377,7 +388,8 @@ function loadVoiceflow() {
                 }
             },
             assistant: {
-                stylesheet: 'https://yannicksegaar.github.io/lastfrontier-voiceflow-styles/LFH_styles.css?=v3'
+                stylesheet: 'https://yannicksegaar.github.io/lastfrontier-voiceflow-styles/LFH_styles.css?=v3',
+                extensions: extensions
             }
         }).then(function() {
             console.log("VoiceFlow chat loaded successfully");
