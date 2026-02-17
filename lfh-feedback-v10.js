@@ -61,8 +61,8 @@ export const FeedbackExtension10 = {
       lastUserMessage = '',
       lastAIResponse = '',
       webhookURL = 'https://n8n.romaix-n8n.xyz/webhook/1c1e9915-a050-4798-b5e2-fbc10ada63ad',
-      autoSubmitDelay = 10,
-      inactivityDelay = 10,
+      autoSubmitDelay = 20,
+      inactivityDelay = 15,
     } = parsedPayload;
 
     const feedbackContainer = document.createElement('div');
